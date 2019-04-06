@@ -4,6 +4,8 @@ VisualStudioVersion = 15.0.27130.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "royhub", "src\AspNetCoreDemoApp\royhub.csproj", "{FA0CC66E-5D01-4557-8438-777D6F18DD75}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "src\server\server.csproj", "{91B5F77A-3723-4B2B-BE52-C8FFCF7ECD6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,6 +16,10 @@ Global
 		{FA0CC66E-5D01-4557-8438-777D6F18DD75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA0CC66E-5D01-4557-8438-777D6F18DD75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA0CC66E-5D01-4557-8438-777D6F18DD75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91B5F77A-3723-4B2B-BE52-C8FFCF7ECD6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91B5F77A-3723-4B2B-BE52-C8FFCF7ECD6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91B5F77A-3723-4B2B-BE52-C8FFCF7ECD6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91B5F77A-3723-4B2B-BE52-C8FFCF7ECD6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

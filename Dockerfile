@@ -17,4 +17,4 @@ FROM microsoft/dotnet:2.2-aspnetcore-runtime-alpine
 WORKDIR /app
 COPY --from=builder /app .
 COPY --from=node /app/build ./wwwroot
-ENTRYPOINT ["./AspNetCoreDemoApp"]
+ENTRYPOINT ["./server"]
