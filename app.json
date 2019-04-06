@@ -1,15 +1,15 @@
 {
-  "name": "AspNet5DemoApp",
+  "name": "royhub",
   "description": "Demo app on ASP.NET Core",
-  "repository": "https://github.com/jincod/AspNet5DemoApp",
+  "repository": "https://github.com/Roy-H/royhub",
   "keywords": ["aspnet", "core"],
-  "stack": "heroku-16",
+  "stack": "heroku-18",
   "buildpacks": [
     {
-      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
+      "url": "https://github.com/Roy-H/royhub.git"
     },
     {
-      "url": "https://github.com/jincod/dotnetcore-buildpack"
+      "url": "https://github.com/Roy-H/royhub/dotnetcore-buildpack"
     }
   ]
 }
