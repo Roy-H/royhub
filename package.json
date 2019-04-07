@@ -1,11 +1,11 @@
 {
-  "name": "aspnet-core-demo-app",
+  "name": "royhub",
   "version": "0.0.1",
   "private": true,
   "description": "Demo app",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jincod/AspNet5DemoApp.git"
+    "url": "https://github.com/Roy-H/royhub.git"
   },
   "dependencies": {
     "react": "16.8.2",
