@@ -1,1 +1,0 @@
-export ASPNETCORE_URLS="http://+:$PORT"
