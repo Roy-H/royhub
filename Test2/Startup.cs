@@ -15,6 +15,7 @@ namespace Test2
     {
         public Startup(IConfiguration configuration)
         {
+            Console.WriteLine("--------------Test2 setup-------------");
             Configuration = configuration;
         }
 
