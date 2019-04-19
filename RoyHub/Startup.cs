@@ -13,11 +13,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
+using RoyHub.Chat;
 
 namespace RoyHub
 {
     public class Startup
     {
+
+        ChatGroup chatGroup;
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -34,6 +37,7 @@ namespace RoyHub
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            chatGroup = new ChatGroup();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -77,8 +81,13 @@ namespace RoyHub
                 {
                     if (context.WebSockets.IsWebSocketRequest)
                     {
-                        WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                        await Echo(context, webSocket);
+                        if (context.Request.QueryString.HasValue)
+                        {
+                            string id = context.Request.QueryString.Value.TrimStart('?');
+                            WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
+                            await chatGroup.Join(id, webSocket);
+                            //await Echo(context, webSocket);
+                        }
                     }
                     else
                     {
