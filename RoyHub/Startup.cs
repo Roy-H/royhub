@@ -101,9 +101,12 @@ namespace RoyHub
             WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
             while (!result.CloseStatus.HasValue)
             {
-                var a = Encoding.Default.GetString(buffer);                
+                var a = Encoding.Default.GetString(buffer);
+                Console.WriteLine("get info from client " + a);
+
                 a = a.Substring(0, result.Count) +"_from server";
                 byte[] re = Encoding.Default.GetBytes(a);
+                
                 await webSocket.SendAsync(new ArraySegment<byte>(re, 0, re.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
 
                 result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
