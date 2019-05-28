@@ -1,7 +1,5 @@
 #define UseOptions // or NoOptions or UseOptionsAO
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -57,6 +55,7 @@ namespace RoyHub
             };
 
             app.UseWebSockets(webSocketOptions);
+
             #endregion
 #endif
 
@@ -73,7 +72,17 @@ namespace RoyHub
             app.UseWebSockets(webSocketOptions);
             #endregion
 #endif
-
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path == "/")
+                {
+                    await context.Response.WriteAsync("you are dull for visiting!!", Encoding.UTF8);
+                }
+                else
+                {
+                    await next();
+                }
+            });
             #region AcceptWebSocket
             app.Use(async (context, next) =>
             {
@@ -100,8 +109,11 @@ namespace RoyHub
                 }
 
             });
+
+            
             #endregion
-            app.UseFileServer();
+            //app.UseFileServer();
+            
         }
         #region Echo
         private async Task Echo(HttpContext context, WebSocket webSocket)
