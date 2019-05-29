@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
 using RoyHub.Chat;
+using RoyHub.Hubs;
 
 namespace RoyHub
 {
@@ -19,8 +20,7 @@ namespace RoyHub
     {
 
         ChatGroup chatGroup;
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging(builder =>
@@ -30,6 +30,8 @@ namespace RoyHub
                     .AddFilter<ConsoleLoggerProvider>(category: null, level: LogLevel.Debug)
                     .AddFilter<DebugLoggerProvider>(category: null, level: LogLevel.Debug);
             });
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +56,7 @@ namespace RoyHub
                 ReceiveBufferSize = 4 * 1024
             };
 
-            app.UseWebSockets(webSocketOptions);
+            //app.UseWebSockets(webSocketOptions);
 
             #endregion
 #endif
@@ -72,6 +74,12 @@ namespace RoyHub
             app.UseWebSockets(webSocketOptions);
             #endregion
 #endif
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/signalchat");
+            });
+
+
             app.Use(async (context, next) =>
             {
                 if (context.Request.Path == "/")
@@ -110,9 +118,9 @@ namespace RoyHub
 
             });
 
-            
+
             #endregion
-            //app.UseFileServer();
+            app.UseFileServer();
             
         }
         #region Echo
