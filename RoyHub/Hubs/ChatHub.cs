@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RoyHub.Hubs
 {
-    public class ChatHub : Hub<IClient>
+    public class ChatHub2 : Hub<IClient>
     {
         private static ConcurrentDictionary<string, User> ChatClients = new ConcurrentDictionary<string, User>();
 
@@ -147,6 +147,14 @@ namespace RoyHub.Hubs
             User client = new User();
             ChatClients.TryGetValue(recepient, out client);
             Clients.Client(client.ID).ParticipantTyping(sender);
+        }
+    }
+
+    public class ChatHub : Hub
+    {
+        public async Task SendMessage(string user, string message)
+        {
+            await Clients.Others.SendAsync("ReceiveMessage", user, message);
         }
     }
 }
