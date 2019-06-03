@@ -172,52 +172,51 @@ namespace RoyHub.Hubs
             return null;
         }
 
-        public async Task Logout()
+        public async Task Logout(string callerName)
         {
             //var name = Clients.CallerState.UserName;
-            var name = "no name";
+            var name = callerName;
             if (!string.IsNullOrEmpty(name))
             {
                 User client = new User();
                 ChatClients.TryRemove(name, out client);
-                name = client.Name;
+                
                 //Clients.Others.ParticipantLogout(name);
                 await Clients.Others.SendAsync("ParticipantLogout", name);
                 Console.WriteLine($"-- {name} logged out");
             }
         }
 
-        public async Task Typing(string recepient)
+        public async Task Typing(string callerName,string recepient)
         {
             if (string.IsNullOrEmpty(recepient)) return;
             //var sender = Clients.CallerState.UserName;
-            var sender = "dd name";
+            var sender = callerName;
             User client = new User();
             ChatClients.TryGetValue(recepient, out client);
-            sender = client.Name;
+            
             //Clients.Client(client.ID).ParticipantTyping(sender);
-            await Clients.Others.SendAsync("ParticipantTyping", sender);
+            await Clients.Client(client.ID).SendAsync("ParticipantTyping", sender);
         }
 
-        public async Task UnicastTextMessage(string recepient, string message)
+        public async Task UnicastTextMessage(string callerName, string recepient, string message)
         {
             //var sender = Clients.CallerState.UserName;
-            var sender = "dd name";
+            var sender = callerName;
             if (!string.IsNullOrEmpty(sender) && recepient != sender &&
                 !string.IsNullOrEmpty(message) && ChatClients.ContainsKey(recepient))
             {
                 User client = new User();
                 ChatClients.TryGetValue(recepient, out client);
-                sender = client.Name;
+                
                 //Clients.Client(client.ID).UnicastTextMessage(sender, message);
-                await Clients.Others.SendAsync("UnicastTextMessage", sender, message);
+                await Clients.Client(client.ID).SendAsync("UnicastTextMessage", sender, message);
             }
         }
 
-        public async Task BroadcastImageMessage(byte[] img)
-        {
-            //var name = Clients.CallerState.UserName;
-            var name = "no name";
+        public async Task BroadcastImageMessage(string callerName,byte[] img)
+        {            
+            var name = callerName;
             if (img != null)
             {
                 //Clients.Others.BroadcastPictureMessage(name, img);
@@ -225,18 +224,18 @@ namespace RoyHub.Hubs
             }
         }
 
-        public async Task UnicastImageMessage(string recepient, byte[] img)
+        public async Task UnicastImageMessage(string callerName,string recepient, byte[] img)
         {
             //var sender = Clients.CallerState.UserName;
-            var sender = "dd name";
+            var sender = callerName;
             if (!string.IsNullOrEmpty(sender) && recepient != sender &&
                 img != null && ChatClients.ContainsKey(recepient))
             {
                 User client = new User();
                 ChatClients.TryGetValue(recepient, out client);
-                sender = client.Name;
+                
                 //Clients.Client(client.ID).UnicastPictureMessage(sender, img);
-                await Clients.Others.SendAsync("UnicastPictureMessage", sender, img);
+                await Clients.Client(client.ID).SendAsync("UnicastPictureMessage", sender, img);
             }
         }
 
