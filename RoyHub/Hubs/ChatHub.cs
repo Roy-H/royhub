@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace RoyHub.Hubs
@@ -199,6 +200,8 @@ namespace RoyHub.Hubs
             await Clients.Client(client.ID).SendAsync("ParticipantTyping", sender);
         }
 
+
+
         public async Task UnicastTextMessage(string callerName, string recepient, string message)
         {
             //var sender = Clients.CallerState.UserName;
@@ -236,6 +239,32 @@ namespace RoyHub.Hubs
                 
                 //Clients.Client(client.ID).UnicastPictureMessage(sender, img);
                 await Clients.Client(client.ID).SendAsync("UnicastPictureMessage", sender, img);
+            }
+        }
+
+        public async Task UnicastVideoFrameMessage2(string img)
+        {
+
+            await Clients.Others.SendAsync("UnicastVideoFrameMessage2", img);
+            //await Task.Factory.StartNew(() =>
+            //{
+            //    byte[] data = Encoding.UTF8.GetBytes(img);
+
+            //});
+        }
+
+        public async Task UnicastVideoFrameMessage(string callerName, string recepient, byte[] img)
+        {
+            //var sender = Clients.CallerState.UserName;
+            var sender = callerName;
+            if (!string.IsNullOrEmpty(sender) && recepient != sender &&
+                img != null && ChatClients.ContainsKey(recepient))
+            {
+                User client = new User();
+                ChatClients.TryGetValue(recepient, out client);
+
+                //Clients.Client(client.ID).UnicastPictureMessage(sender, img);
+                await Clients.Client(client.ID).SendAsync("UnicastVideoFrameMessage", sender, img);
             }
         }
 
